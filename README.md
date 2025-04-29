@@ -11,7 +11,7 @@ The goal is to train an agent to land a spacecraft safely between two flags usin
 - Implement a custom DQN agent
 - Train the agent to solve the environment
 - Monitor performance using reward trends and average scores
-- Generate a demo `.gif` of successful landings\
+- Generate a demo `.gif` of successful landings
 
 # 2. Environment Setup
 
