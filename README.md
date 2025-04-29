@@ -58,11 +58,11 @@ Below is the full implementation of:
 
 ### DQN
 
+```
 class DQNNetwork(nn.Module):
     def __init__(self, input_dim, output_dim, hidden_layers=[128, 128]):
         super(DQNNetwork, self).__init__()
         layers = []
-
         prev_size = input_dim
         for h in hidden_layers:
             layers.append(nn.Linear(prev_size, h))
@@ -74,9 +74,11 @@ class DQNNetwork(nn.Module):
 
     def forward(self, x):
         return self.model(x)
+```
 
 ### Replay Buffer
 
+```
 class ReplayBuffer:
     def __init__(self, capacity, batch_size):
         self.memory = deque(maxlen=capacity)
@@ -100,9 +102,11 @@ class ReplayBuffer:
         dones = torch.tensor(np.vstack([e.done for e in batch]).astype(np.uint8), dtype=torch.float32).to(device)
 
         return states, actions, rewards, next_states, dones
+```
 
 ### DQN Agent Class
 
+```
 class DQNAgent:
     def __init__(self, state_size, action_size, buffer_size = 100000, batch_size=64,
                  gamma = 0.99, lr = 1e-3, tau = 1e-3, update_every = 4):
@@ -161,9 +165,11 @@ class DQNAgent:
         for target_param, local_param in zip(self.qnetwork_target.parameters(),
                                               self.qnetwork_local.parameters()):
             target_param.data.copy_(self.tau * local_param.data + (1.0 - self.tau) * target_param.data)
+```
 
 ### DQN Training Loop
 
+```
 def train_dqn(env, agent, n_episodes = 1000, max_t = 1000,
               eps_start = 1.0, eps_end = 0.01, eps_decay = 0.995,
               target_score = 200.0, save_path = "dqn_lander.pth", verbose = True):
@@ -216,9 +222,11 @@ def train_dqn(env, agent, n_episodes = 1000, max_t = 1000,
         torch.save(agent.qnetwork_local.state_dict(), save_path)
 
     return scores  # Return list of all episode rewards
+```
 
 ### Training Model
 
+```
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Create the LunarLander-v3 environment
@@ -235,6 +243,7 @@ agent = DQNAgent(state_size = state_dim, action_size = action_dim)
 
 # Train the agent and collect episode scores
 scores = train_dqn(env, agent, n_episodes = 1000, target_score = 200)
+```
 
 # 4. Troubleshooting & Improvements
 
